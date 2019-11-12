@@ -1,0 +1,67 @@
+:root {
+  box-sizing: border-box;
+  }
+  *,
+  ::before,
+  ::after {
+  box-sizing: inherit;
+  }
+  body {
+  background-color: #eee;
+  font-family: Helvetica, Arial, sans-serif;
+  }
+  body {
+  margin-top: 1.5em;
+  }
+  
+
+.container {
+  display: flex;
+  margin-top: 0;
+  margin-left: 1.5em;
+}
+
+.main  {
+    flex:2;     
+    padding: 1em 1.5em;
+    background-color: #fff;
+    border-radius: .5em;
+}
+.sidebar {
+    flex:1;
+    padding: 1.5em;
+    margin-top: 0;
+    margin-left: 1.5em;
+    background-color: #fff;
+    border-radius: .5em;
+}
+
+.baslik{
+  background-color: #0072b0;
+  color: #eee;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: .5em;
+}
+label,input{
+  display:-webkit-box;
+  
+  
+}
+label {
+  text-align: left;
+  
+}
+footer {
+  background-color: #0072b0;
+  color: #eee;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: .5em;
+}
+canvas {
+  background-color: wheat;
+  width: 850px;
+  height: 300px;
+
+}
