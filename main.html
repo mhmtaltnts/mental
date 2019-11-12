@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>  
+  <title>Mental Aritmetik</title>
+  <meta charset='utf-8'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src='jquery.js'></script>
+      
+  
+</head>
+<body>
+  <header class="baslik">
+      <h1></h1>
+  </header>  
+  <div class="container">
+    
+      <main class="main">
+        <div class='main title'>
+          <h1>Rastgele Sayılar</h1>
+        </div>
+        <div class="tuval" width="1000">
+          <!--<canvas id="tuval" ></canvas>-->
+          <h1 id="sayi" style="font-size: 900%">0000</h1>
+        </div> 
+        <div>
+          <button id="baslaCan" class="buton">Yürüt</button>
+          <button id="durCan" class="buton" >Durdur</button>          
+        </div>      
+      </main>
+      <aside class="sidebar">
+          <h3>İşlem Seçiniz</h3>
+          <p>
+            <select id="islemler" >
+                <option value="toplama">Toplama</option>
+                <option value="cikarma">Çıkarma</option>
+                <option value="carpma">Çarpma</option>
+            </select>
+          </p>
+        
+          <h3>Sınır Değerler Giriniz</h3>
+            <p>
+                Minimum Sayı:<input id="minSayId" type="number" value="100"/>
+            </p>
+            <p>
+                Maksimum Sayı:<input id="maxSayId" type="number" value="200"/>
+            </p>
+            <p>
+                Kaç Sayı:<input id="adetId" type="number" name="adet" value="5"/>
+            </p> 
+            <p>
+                Süre:<input id="sureId" type="number" name="sure" value="15"/>
+            </p> 
+            <button id="clstr" onclick="reset()">Çalıştır</button>  
+        
+      </aside>
+      
+  
+  </div>
+  <footer>
+    <h1></h1>
+  </footer>
+
+          
+</body>
+      <script>
+        oynat = true;
+        var baslaButon = $("#baslaCan");
+        var durButonu = $("#durCan");        
+       
+        
+        baslaButon.hide();
+       
+        baslaButon.click(function() {
+        $(this).hide();
+        durButonu.show();
+        oynat=true;  });
+        
+        durButonu.click(function() {
+        $(this).hide();
+        baslaButon.show();
+        oynat=false;
+        });
+      </script> 
+      
+      <script > 
+      //nicelikleri buraya giriniz
+      var tuval = document.getElementById('tuval');
+      var baglam = tuval.getContext('2d'); 
+      var n=parseInt(document.getElementById('adetId').value);
+      var sayilar=[];    
+      var min=parseFloat(document.getElementById('minSayId').value);
+      var max=parseFloat(document.getElementById('maxSayId').value);
+      var zaman=parseFloat(document.getElementById("sureId").value)/n;
+      var islem=document.getElementById("islemler").value;
+      var k = 0;
+      var cvp=0;
+      var tplm=0;
+      var crp=1;
+      var ses1 = new Audio('alkis.wav');
+      var ses2 = new Audio('hata.wav');
+      function reset(){ 
+          oynat = true;
+          baslaButon.hide();
+          durButonu.show();       
+          min=parseInt(document.getElementById('minSayId').value);
+          max=parseInt(document.getElementById('maxSayId').value);
+          n=parseInt(document.getElementById('adetId').value)
+          zaman=parseInt(document.getElementById("sureId").value)/n;
+          islem=document.getElementById("islemler").value;
+          k = 0; 
+          sayilar=[];
+          cvp=0;
+          tplm=0;
+          crp=1;
+          sayiUret();
+          toplam();
+          carp();
+          f();
+          ses1 = new Audio('alkis.wav');
+          ses2 = new Audio('hata.wav');
+      };
+      //
+      //sayiUret();
+      //f();
+      //
+      function toplam() {
+        for (i=0; i<sayilar.length;i++){
+          tplm+=sayilar[i];
+        }
+        return tplm;
+      }       
+      //
+      function carp(){
+        for(i=0;i<sayilar.length;i++){
+          crp*=sayilar[i];
+        }
+        return crp;
+      } 
+      //     
+      function ciz(sayi) { 
+        document.getElementById("sayi").innerHTML = sayi;
+        
+
+        //baglam.font = "bold 64px Arial";
+        //baglam.fillStyle = '#0000ff';
+        //baglam.fillText(sayi, 5, 80)
+        }
+      //
+      function sayiUret(){
+        for (let j=0; j<n; j++){
+          var sayi=Math.round(Math.random()*(max-min))+min;
+          var eksiArti=Math.random()<0.5?-1:1;
+          if (islem=="cikarma"){
+            sayi*=eksiArti;
+          } 
+          sayilar.push(sayi);
+          }
+          }
+      
+      //
+      
+      //
+       
+      function f() {
+        //baglam.clearRect(0, 0, tuval.width, tuval.height);
+        if (oynat) { k++;}     
+         
+        ciz(sayilar[k-1]);      
+        
+        if( k < n ){setTimeout( f, zaman*1000 );}
+         
+        
+        if (k==n){setTimeout(cevap,zaman*1000);}
+        
+        }
+      //
+      
+      function cevap(){        
+        cvp= parseFloat(prompt("Cevabınız", ""));
+        setTimeout(function () {
+          if (islem=="toplama"){
+             if (cvp==tplm) {ses1.onended=function(){alert("Tebrikler bildiniz");};ses1.play();} 
+              else { ses2.onended=function(){alert("Üzgünüm bilemediniz");};ses2.play();}                      
+            };
+          if (islem=="cikarma"){
+            if (cvp==tplm) {ses1.onended=function(){alert("Tebrikler bildiniz");};ses1.play();} 
+              else { ses2.onended=function(){alert("Üzgünüm bilemediniz");};ses2.play();}
+          };
+          if (islem=="carpma"){
+            if (cvp==crp) {ses1.onended=function(){alert("Tebrikler bildiniz");};ses1.play();}
+              else { ses2.onended=function(){alert("Üzgünüm bilemediniz");};ses2.play();}
+        };
+        }, 0);
+        
+      } 
+      //
+      
+      //
+    </script>
+</html>
